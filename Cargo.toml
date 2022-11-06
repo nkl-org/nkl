@@ -1,0 +1,10 @@
+[package]
+name = "nkl"
+version = "0.0.0"
+edition = "2021"
+authors = ["Loky HARK"]
+description = "Nuclear Kernel Library"
+license = "MIT"
+repository = "https://github.com/nkl-org/nkl"
+keywords = ["nuclear"]
+categories = ["science"]
