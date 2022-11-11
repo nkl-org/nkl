@@ -18,6 +18,11 @@
 ///
 /// - Chemical element from *Hydrogen* (Z = 1) to *Oganesson* (Z = 118) are included.
 /// - `Element` enum is marked as non exhaustive for future-proofing.
+///
+/// # References
+///
+/// - [Wikipedia: Periodic Table](https://en.wikipedia.org/wiki/Periodic_table)
+/// - [IUPAC](https://iupac.org/what-we-do/periodic-table-of-elements/)
 #[derive(Clone, Copy, Debug, Eq, Hash, Ord, PartialEq, PartialOrd)]
 #[non_exhaustive]
 pub enum Element {
@@ -1194,6 +1199,10 @@ impl Element {
     /// # use nkl::core::Element;
     /// assert_eq!(Element::Hydrogen.period(), 1);
     /// ```
+    ///
+    /// # References
+    ///
+    /// [Wikipedia: Period (periodic table)](https://en.wikipedia.org/wiki/Period_(periodic_table))
     pub fn period(&self) -> u32 {
         match self {
             Element::Hydrogen => 1,
@@ -1329,6 +1338,10 @@ impl Element {
     /// # Notes
     ///
     /// Lanthanides and actinides (f-block) do not have a group.
+    ///
+    /// # References
+    ///
+    /// [Wikipedia: Group (periodic table)](https://en.wikipedia.org/wiki/Group_(periodic_table))
     pub fn group(&self) -> Option<u32> {
         match self {
             Element::Hydrogen => Some(1),
@@ -1460,6 +1473,10 @@ impl Element {
     /// # use nkl::core::Element;
     /// assert_eq!(Element::Hydrogen.block(), "s");
     /// ```
+    ///
+    /// # References
+    ///
+    /// [Wikipedia: Block (periodic table)](https://en.wikipedia.org/wiki/Block_(periodic_table))
     pub fn block(&self) -> &str {
         match self {
             Element::Hydrogen => "s",
@@ -1606,6 +1623,10 @@ impl Element {
     /// assert!(Element::Lithium.is_alkali_metal());
     /// assert!(!Element::Iron.is_alkali_metal());
     /// ```
+    ///
+    /// # References
+    ///
+    /// [Wikipedia: Alkali metal](https://en.wikipedia.org/wiki/Alkali_metal)
     pub fn is_alkali_metal(&self) -> bool {
         matches!(
             self,
@@ -1627,6 +1648,10 @@ impl Element {
     /// assert!(Element::Beryllium.is_alkaline_earth_metal());
     /// assert!(!Element::Iron.is_alkaline_earth_metal());
     /// ```
+    ///
+    /// # References
+    ///
+    /// [Wikipedia: Alkaline earth metal](https://en.wikipedia.org/wiki/Alkaline_earth_metal)
     pub fn is_alkaline_earth_metal(&self) -> bool {
         matches!(
             self,
@@ -1648,6 +1673,10 @@ impl Element {
     /// assert!(Element::Nitrogen.is_pnictogen());
     /// assert!(!Element::Iron.is_pnictogen());
     /// ```
+    ///
+    /// # References
+    ///
+    /// [Wikipedia: Pnictogen](https://en.wikipedia.org/wiki/Pnictogen)
     pub fn is_pnictogen(&self) -> bool {
         matches!(
             self,
@@ -1669,6 +1698,10 @@ impl Element {
     /// assert!(Element::Oxygen.is_chalcogen());
     /// assert!(!Element::Iron.is_chalcogen());
     /// ```
+    ///
+    /// # References
+    ///
+    /// [Wikipedia: Chalcogen](https://en.wikipedia.org/wiki/Chalcogen)
     pub fn is_chalcogen(&self) -> bool {
         matches!(
             self,
@@ -1690,6 +1723,10 @@ impl Element {
     /// assert!(Element::Fluorine.is_halogen());
     /// assert!(!Element::Iron.is_halogen());
     /// ```
+    ///
+    /// # References
+    ///
+    /// [Wikipedia: Halogen](https://en.wikipedia.org/wiki/Halogen)
     pub fn is_halogen(&self) -> bool {
         matches!(
             self,
@@ -1711,6 +1748,10 @@ impl Element {
     /// assert!(Element::Helium.is_noble_gas());
     /// assert!(!Element::Iron.is_noble_gas());
     /// ```
+    ///
+    /// # References
+    ///
+    /// [Wikipedia: Noble gas](https://en.wikipedia.org/wiki/Noble_gas)
     pub fn is_noble_gas(&self) -> bool {
         matches!(
             self,
