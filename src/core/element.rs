@@ -5,6 +5,10 @@
 /// ```
 /// # use nkl::core::Element;
 /// let hydrogen = Element::Hydrogen;
+/// let helium = Element::from_name("Helium");
+/// let lithium = Element::from_symbol("Li");
+/// let beryllium = Element::from_atomic_number(4);
+///
 /// let name = hydrogen.name();
 /// let symbol = hydrogen.symbol();
 /// let atomic_number = hydrogen.atomic_number();
@@ -387,7 +391,7 @@ impl Element {
     ///
     /// ```
     /// # use nkl::core::Element;
-    /// let hydrogen = Element::from_name("Hydrogen");
+    /// assert_eq!(Element::from_name("Hydrogen"), Some(Element::Hydrogen));
     /// ```
     pub fn from_name(name: &str) -> Option<Self> {
         match name.to_ascii_lowercase().as_str() {
@@ -524,7 +528,7 @@ impl Element {
     ///
     /// ```
     /// # use nkl::core::Element;
-    /// let hydrogen = Element::from_symbol("H");
+    /// assert_eq!(Element::from_symbol("H"), Some(Element::Hydrogen));
     /// ```
     pub fn from_symbol(symbol: &str) -> Option<Self> {
         match symbol.to_ascii_lowercase().as_str() {
@@ -661,7 +665,7 @@ impl Element {
     ///
     /// ```
     /// # use nkl::core::Element;
-    /// let hydrogen = Element::from_atomic_number(1);
+    /// assert_eq!(Element::from_atomic_number(1), Some(Element::Hydrogen));
     /// ```
     pub fn from_atomic_number(atomic_number: u32) -> Option<Self> {
         match atomic_number {
@@ -1180,13 +1184,147 @@ impl Element {
         }
     }
 
+    /// Returns `Element`'s group (periodic table column number).
+    ///
+    /// # Examples
+    ///
+    /// ```
+    /// # use nkl::core::Element;
+    /// assert_eq!(Element::Hydrogen.group(), Some(1));
+    /// ```
+    ///
+    /// # Notes
+    ///
+    /// Lanthanides and actinides (f-block) do not have a group.
+    pub fn group(&self) -> Option<u32> {
+        match self {
+            Element::Hydrogen => Some(1),
+            Element::Helium => Some(18),
+            Element::Lithium => Some(1),
+            Element::Beryllium => Some(2),
+            Element::Boron => Some(13),
+            Element::Carbon => Some(14),
+            Element::Nitrogen => Some(15),
+            Element::Oxygen => Some(16),
+            Element::Fluorine => Some(17),
+            Element::Neon => Some(18),
+            Element::Sodium => Some(1),
+            Element::Magnesium => Some(2),
+            Element::Aluminium => Some(13),
+            Element::Silicon => Some(14),
+            Element::Phosphorus => Some(15),
+            Element::Sulfur => Some(16),
+            Element::Chlorine => Some(17),
+            Element::Argon => Some(18),
+            Element::Potassium => Some(1),
+            Element::Calcium => Some(2),
+            Element::Scandium => Some(3),
+            Element::Titanium => Some(4),
+            Element::Vanadium => Some(5),
+            Element::Chromium => Some(6),
+            Element::Manganese => Some(7),
+            Element::Iron => Some(8),
+            Element::Cobalt => Some(9),
+            Element::Nickel => Some(10),
+            Element::Copper => Some(11),
+            Element::Zinc => Some(12),
+            Element::Gallium => Some(13),
+            Element::Germanium => Some(14),
+            Element::Arsenic => Some(15),
+            Element::Selenium => Some(61),
+            Element::Bromine => Some(17),
+            Element::Krypton => Some(18),
+            Element::Rubidium => Some(1),
+            Element::Strontium => Some(2),
+            Element::Yttrium => Some(3),
+            Element::Zirconium => Some(4),
+            Element::Niobium => Some(5),
+            Element::Molybdenum => Some(6),
+            Element::Technetium => Some(7),
+            Element::Ruthenium => Some(8),
+            Element::Rhodium => Some(9),
+            Element::Palladium => Some(10),
+            Element::Silver => Some(11),
+            Element::Cadmium => Some(12),
+            Element::Indium => Some(13),
+            Element::Tin => Some(14),
+            Element::Antimony => Some(15),
+            Element::Tellurium => Some(16),
+            Element::Iodine => Some(17),
+            Element::Xenon => Some(18),
+            Element::Caesium => Some(1),
+            Element::Barium => Some(2),
+            Element::Lanthanum => None,
+            Element::Cerium => None,
+            Element::Praseodymium => None,
+            Element::Neodymium => None,
+            Element::Promethium => None,
+            Element::Samarium => None,
+            Element::Europium => None,
+            Element::Gadolinium => None,
+            Element::Terbium => None,
+            Element::Dysprosium => None,
+            Element::Holmium => None,
+            Element::Erbium => None,
+            Element::Thulium => None,
+            Element::Ytterbium => None,
+            Element::Lutetium => Some(3),
+            Element::Hafnium => Some(4),
+            Element::Tantalum => Some(5),
+            Element::Tungsten => Some(6),
+            Element::Rhenium => Some(7),
+            Element::Osmium => Some(8),
+            Element::Iridium => Some(9),
+            Element::Platinum => Some(10),
+            Element::Gold => Some(11),
+            Element::Mercury => Some(12),
+            Element::Thallium => Some(13),
+            Element::Lead => Some(14),
+            Element::Bismuth => Some(15),
+            Element::Polonium => Some(16),
+            Element::Astatine => Some(17),
+            Element::Radon => Some(18),
+            Element::Francium => Some(1),
+            Element::Radium => Some(2),
+            Element::Actinium => None,
+            Element::Thorium => None,
+            Element::Protactinium => None,
+            Element::Uranium => None,
+            Element::Neptunium => None,
+            Element::Plutonium => None,
+            Element::Americium => None,
+            Element::Curium => None,
+            Element::Berkelium => None,
+            Element::Californium => None,
+            Element::Einsteinium => None,
+            Element::Fermium => None,
+            Element::Mendelevium => None,
+            Element::Nobelium => None,
+            Element::Lawrencium => Some(3),
+            Element::Rutherfordium => Some(4),
+            Element::Dubnium => Some(5),
+            Element::Seaborgium => Some(6),
+            Element::Bohrium => Some(7),
+            Element::Hassium => Some(8),
+            Element::Meitnerium => Some(9),
+            Element::Darmstadtium => Some(10),
+            Element::Roentgenium => Some(11),
+            Element::Copernicium => Some(12),
+            Element::Nihonium => Some(13),
+            Element::Flerovium => Some(14),
+            Element::Moscovium => Some(15),
+            Element::Livermorium => Some(16),
+            Element::Tennessine => Some(17),
+            Element::Oganesson => Some(18),
+        }
+    }
+
     /// Returns an iterator over all elements.
     ///
     /// # Examples
     ///
     /// ```
     /// # use nkl::core::Element;
-    ///
     /// for element in Element::iter() {
     ///     println!("{}", element.name());
     /// }
