@@ -1596,4 +1596,131 @@ impl Element {
     pub fn iter() -> impl Iterator<Item = Element> {
         Self::ELEMENTS.iter().copied()
     }
+
+    /// Returns `true` if this `Element` is an alkali metal.
+    ///
+    /// # Examples
+    ///
+    /// ```
+    /// # use nkl::core::Element;
+    /// assert!(Element::Lithium.is_alkali_metal());
+    /// assert!(!Element::Iron.is_alkali_metal());
+    /// ```
+    pub fn is_alkali_metal(&self) -> bool {
+        matches!(
+            self,
+            Self::Lithium
+                | Self::Sodium
+                | Self::Potassium
+                | Self::Rubidium
+                | Self::Caesium
+                | Self::Francium
+        )
+    }
+
+    /// Returns `true` if this `Element` is an alkaline earth metal.
+    ///
+    /// # Examples
+    ///
+    /// ```
+    /// # use nkl::core::Element;
+    /// assert!(Element::Beryllium.is_alkaline_earth_metal());
+    /// assert!(!Element::Iron.is_alkaline_earth_metal());
+    /// ```
+    pub fn is_alkaline_earth_metal(&self) -> bool {
+        matches!(
+            self,
+            Self::Beryllium
+                | Self::Magnesium
+                | Self::Calcium
+                | Self::Strontium
+                | Self::Barium
+                | Self::Radium
+        )
+    }
+
+    /// Returns `true` if this `Element` is a pnictogen.
+    ///
+    /// # Examples
+    ///
+    /// ```
+    /// # use nkl::core::Element;
+    /// assert!(Element::Nitrogen.is_pnictogen());
+    /// assert!(!Element::Iron.is_pnictogen());
+    /// ```
+    pub fn is_pnictogen(&self) -> bool {
+        matches!(
+            self,
+            Self::Nitrogen
+                | Self::Phosphorus
+                | Self::Arsenic
+                | Self::Antimony
+                | Self::Bismuth
+                | Self::Moscovium
+        )
+    }
+
+    /// Returns `true` if this `Element` is a chalcogen.
+    ///
+    /// # Examples
+    ///
+    /// ```
+    /// # use nkl::core::Element;
+    /// assert!(Element::Oxygen.is_chalcogen());
+    /// assert!(!Element::Iron.is_chalcogen());
+    /// ```
+    pub fn is_chalcogen(&self) -> bool {
+        matches!(
+            self,
+            Self::Oxygen
+                | Self::Sulfur
+                | Self::Selenium
+                | Self::Tellurium
+                | Self::Polonium
+                | Self::Livermorium
+        )
+    }
+
+    /// Returns `true` if this `Element` is an halogen.
+    ///
+    /// # Examples
+    ///
+    /// ```
+    /// # use nkl::core::Element;
+    /// assert!(Element::Fluorine.is_halogen());
+    /// assert!(!Element::Iron.is_halogen());
+    /// ```
+    pub fn is_halogen(&self) -> bool {
+        matches!(
+            self,
+            Self::Fluorine
+                | Self::Chlorine
+                | Self::Bromine
+                | Self::Iodine
+                | Self::Astatine
+                | Self::Tennessine
+        )
+    }
+
+    /// Returns `true` if this `Element` is a noble gas.
+    ///
+    /// # Examples
+    ///
+    /// ```
+    /// # use nkl::core::Element;
+    /// assert!(Element::Helium.is_noble_gas());
+    /// assert!(!Element::Iron.is_noble_gas());
+    /// ```
+    pub fn is_noble_gas(&self) -> bool {
+        matches!(
+            self,
+            Self::Helium
+                | Self::Neon
+                | Self::Argon
+                | Self::Krypton
+                | Self::Xenon
+                | Self::Radon
+                | Self::Oganesson
+        )
+    }
 }
