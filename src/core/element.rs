@@ -1,4 +1,19 @@
-/// Periodic table element.
+/// Periodic table chemical element.
+///
+/// # Examples
+///
+/// ```
+/// # use nkl::core::Element;
+/// let hydrogen = Element::Hydrogen;
+/// let name = hydrogen.name();
+/// let symbol = hydrogen.symbol();
+/// let atomic_number = hydrogen.atomic_number();
+/// ```
+///
+/// # Notes
+///
+/// - Chemical element from *Hydrogen* (Z = 1) to *Oganesson* (Z = 118) are included.
+/// - `Element` enum is marked as non exhaustive for future-proofing.
 #[derive(Clone, Copy, Debug, Eq, Hash, Ord, PartialEq, PartialOrd)]
 #[non_exhaustive]
 #[allow(missing_docs)]
