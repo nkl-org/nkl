@@ -3,7 +3,8 @@
 /// # Examples
 ///
 /// ```
-/// # use nkl::core::Element;
+/// use nkl::core::Element;
+///
 /// let hydrogen = Element::Hydrogen;
 /// let helium = Element::from_name("Helium").unwrap();
 /// let lithium = Element::from_symbol("Li").unwrap();
@@ -274,6 +275,9 @@ pub enum Element {
 }
 
 impl Element {
+    /// Maximum atomic number.
+    pub(crate) const MAX_ATOMIC_NUMBER: u32 = 118;
+
     /// Elements array for iterator.
     const ELEMENTS: [Self; 118] = [
         Self::Hydrogen,
@@ -406,7 +410,8 @@ impl Element {
     /// # Examples
     ///
     /// ```
-    /// # use nkl::core::Element;
+    /// use nkl::core::Element;
+    ///
     /// assert_eq!(Element::from_name("Hydrogen"), Some(Element::Hydrogen));
     /// ```
     pub fn from_name(name: &str) -> Option<Self> {
@@ -543,7 +548,8 @@ impl Element {
     /// # Examples
     ///
     /// ```
-    /// # use nkl::core::Element;
+    /// use nkl::core::Element;
+    ///
     /// assert_eq!(Element::from_symbol("H"), Some(Element::Hydrogen));
     /// ```
     pub fn from_symbol(symbol: &str) -> Option<Self> {
@@ -675,12 +681,13 @@ impl Element {
     /// # Returns
     ///
     /// - `Some(element)` if `atomic_number` ∈ `[1, 118]`
-    /// - `None` if `atomic_number` ∉ `[0, 118]`
+    /// - `None` if `atomic_number` ∉ `[1, 118]`
     ///
     /// # Examples
     ///
     /// ```
-    /// # use nkl::core::Element;
+    /// use nkl::core::Element;
+    ///
     /// assert_eq!(Element::from_atomic_number(1), Some(Element::Hydrogen));
     /// ```
     pub fn from_atomic_number(atomic_number: u32) -> Option<Self> {
@@ -812,7 +819,8 @@ impl Element {
     /// # Examples
     ///
     /// ```
-    /// # use nkl::core::Element;
+    /// use nkl::core::Element;
+    ///
     /// assert_eq!(Element::Hydrogen.name(), "Hydrogen");
     /// ```
     pub fn name(&self) -> &str {
@@ -943,7 +951,8 @@ impl Element {
     /// # Examples
     ///
     /// ```
-    /// # use nkl::core::Element;
+    /// use nkl::core::Element;
+    ///
     /// assert_eq!(Element::Hydrogen.symbol(), "H");
     /// ```
     pub fn symbol(&self) -> &str {
@@ -1074,7 +1083,8 @@ impl Element {
     /// # Examples
     ///
     /// ```
-    /// # use nkl::core::Element;
+    /// use nkl::core::Element;
+    ///
     /// assert_eq!(Element::Hydrogen.atomic_number(), 1);
     /// ```
     pub fn atomic_number(&self) -> u32 {
@@ -1205,7 +1215,8 @@ impl Element {
     /// # Examples
     ///
     /// ```
-    /// # use nkl::core::Element;
+    /// use nkl::core::Element;
+    ///
     /// assert_eq!(Element::Hydrogen.period(), 1);
     /// ```
     ///
@@ -1340,7 +1351,8 @@ impl Element {
     /// # Examples
     ///
     /// ```
-    /// # use nkl::core::Element;
+    /// use nkl::core::Element;
+    ///
     /// assert_eq!(Element::Hydrogen.group(), Some(1));
     /// ```
     ///
@@ -1479,7 +1491,8 @@ impl Element {
     /// # Examples
     ///
     /// ```
-    /// # use nkl::core::Element;
+    /// use nkl::core::Element;
+    ///
     /// assert_eq!(Element::Hydrogen.block(), "s");
     /// ```
     ///
@@ -1614,7 +1627,8 @@ impl Element {
     /// # Examples
     ///
     /// ```
-    /// # use nkl::core::Element;
+    /// use nkl::core::Element;
+    ///
     /// for element in Element::iter() {
     ///     println!("{}", element.name());
     /// }
@@ -1628,7 +1642,8 @@ impl Element {
     /// # Examples
     ///
     /// ```
-    /// # use nkl::core::Element;
+    /// use nkl::core::Element;
+    ///
     /// assert!(Element::Lithium.is_alkali_metal());
     /// assert!(!Element::Iron.is_alkali_metal());
     /// ```
@@ -1653,7 +1668,8 @@ impl Element {
     /// # Examples
     ///
     /// ```
-    /// # use nkl::core::Element;
+    /// use nkl::core::Element;
+    ///
     /// assert!(Element::Beryllium.is_alkaline_earth_metal());
     /// assert!(!Element::Iron.is_alkaline_earth_metal());
     /// ```
@@ -1678,7 +1694,8 @@ impl Element {
     /// # Examples
     ///
     /// ```
-    /// # use nkl::core::Element;
+    /// use nkl::core::Element;
+    ///
     /// assert!(Element::Nitrogen.is_pnictogen());
     /// assert!(!Element::Iron.is_pnictogen());
     /// ```
@@ -1703,7 +1720,8 @@ impl Element {
     /// # Examples
     ///
     /// ```
-    /// # use nkl::core::Element;
+    /// use nkl::core::Element;
+    ///
     /// assert!(Element::Oxygen.is_chalcogen());
     /// assert!(!Element::Iron.is_chalcogen());
     /// ```
@@ -1728,7 +1746,8 @@ impl Element {
     /// # Examples
     ///
     /// ```
-    /// # use nkl::core::Element;
+    /// use nkl::core::Element;
+    ///
     /// assert!(Element::Fluorine.is_halogen());
     /// assert!(!Element::Iron.is_halogen());
     /// ```
@@ -1753,7 +1772,8 @@ impl Element {
     /// # Examples
     ///
     /// ```
-    /// # use nkl::core::Element;
+    /// use nkl::core::Element;
+    ///
     /// assert!(Element::Helium.is_noble_gas());
     /// assert!(!Element::Iron.is_noble_gas());
     /// ```
