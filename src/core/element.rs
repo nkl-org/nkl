@@ -5,13 +5,16 @@
 /// ```
 /// # use nkl::core::Element;
 /// let hydrogen = Element::Hydrogen;
-/// let helium = Element::from_name("Helium");
-/// let lithium = Element::from_symbol("Li");
-/// let beryllium = Element::from_atomic_number(4);
+/// let helium = Element::from_name("Helium").unwrap();
+/// let lithium = Element::from_symbol("Li").unwrap();
+/// let beryllium = Element::from_atomic_number(4).unwrap();
 ///
-/// let name = hydrogen.name();
-/// let symbol = hydrogen.symbol();
-/// let atomic_number = hydrogen.atomic_number();
+/// assert_eq!(hydrogen.name(), "Hydrogen");
+/// assert_eq!(hydrogen.symbol(), "H");
+/// assert_eq!(hydrogen.atomic_number(), 1);
+/// assert_eq!(hydrogen.block(), "s");
+/// assert_eq!(hydrogen.period(), 1);
+/// assert_eq!(hydrogen.group(), Some(1));
 /// ```
 ///
 /// # Notes
@@ -22,7 +25,7 @@
 /// # References
 ///
 /// - [Wikipedia: Periodic Table](https://en.wikipedia.org/wiki/Periodic_table)
-/// - [IUPAC](https://iupac.org/what-we-do/periodic-table-of-elements/)
+/// - [IUPAC Periodic Table of the Elements and Isotopes](https://iupac.org/what-we-do/periodic-table-of-elements/)
 #[derive(Clone, Copy, Debug, Eq, Hash, Ord, PartialEq, PartialOrd)]
 #[non_exhaustive]
 pub enum Element {
@@ -1060,7 +1063,7 @@ impl Element {
         }
     }
 
-    /// Returns `Element`'s atomic number `A`.
+    /// Returns `Element`'s atomic number `Z`.
     ///
     /// # Examples
     ///
