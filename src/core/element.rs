@@ -5,13 +5,16 @@
 /// ```
 /// # use nkl::core::Element;
 /// let hydrogen = Element::Hydrogen;
-/// let helium = Element::from_name("Helium");
-/// let lithium = Element::from_symbol("Li");
-/// let beryllium = Element::from_atomic_number(4);
+/// let helium = Element::from_name("Helium").unwrap();
+/// let lithium = Element::from_symbol("Li").unwrap();
+/// let beryllium = Element::from_atomic_number(4).unwrap();
 ///
-/// let name = hydrogen.name();
-/// let symbol = hydrogen.symbol();
-/// let atomic_number = hydrogen.atomic_number();
+/// assert_eq!(hydrogen.name(), "Hydrogen");
+/// assert_eq!(hydrogen.symbol(), "H");
+/// assert_eq!(hydrogen.atomic_number(), 1);
+/// assert_eq!(hydrogen.block(), "s");
+/// assert_eq!(hydrogen.period(), 1);
+/// assert_eq!(hydrogen.group(), Some(1));
 /// ```
 ///
 /// # Notes
@@ -21,8 +24,14 @@
 ///
 /// # References
 ///
+/// - Holden, Norman E., Coplen, Tyler B., Böhlke, John K., Tarbox, Lauren V., Benefield, Jacqueline,
+///   de Laeter, John R., Mahaffy, Peter G., O’Connor, Glenda, Roth, Etienne, Tepper, Dorothy H.,
+///   Walczyk, Thomas, Wieser, Michael E. and Yoneda, Shigekazu.
+///   *IUPAC Periodic Table of the Elements and Isotopes (IPTEI) for the Education Community (IUPAC Technical Report)*
+///   Pure and Applied Chemistry, vol. 90, no. 12, 2018, pp. 1833-2092.
+///   <https://doi.org/10.1515/pac-2015-0703>
+/// - [IUPAC Periodic Table of the Elements and Isotopes](https://iupac.org/what-we-do/periodic-table-of-elements/)
 /// - [Wikipedia: Periodic Table](https://en.wikipedia.org/wiki/Periodic_table)
-/// - [IUPAC](https://iupac.org/what-we-do/periodic-table-of-elements/)
 #[derive(Clone, Copy, Debug, Eq, Hash, Ord, PartialEq, PartialOrd)]
 #[non_exhaustive]
 pub enum Element {
@@ -1060,7 +1069,7 @@ impl Element {
         }
     }
 
-    /// Returns `Element`'s atomic number `A`.
+    /// Returns `Element`'s atomic number `Z`.
     ///
     /// # Examples
     ///
