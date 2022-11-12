@@ -24,8 +24,14 @@
 ///
 /// # References
 ///
-/// - [Wikipedia: Periodic Table](https://en.wikipedia.org/wiki/Periodic_table)
+/// - Holden, Norman E., Coplen, Tyler B., Böhlke, John K., Tarbox, Lauren V., Benefield, Jacqueline,
+///   de Laeter, John R., Mahaffy, Peter G., O’Connor, Glenda, Roth, Etienne, Tepper, Dorothy H.,
+///   Walczyk, Thomas, Wieser, Michael E. and Yoneda, Shigekazu.
+///   *IUPAC Periodic Table of the Elements and Isotopes (IPTEI) for the Education Community (IUPAC Technical Report)*
+///   Pure and Applied Chemistry, vol. 90, no. 12, 2018, pp. 1833-2092.
+///   <https://doi.org/10.1515/pac-2015-0703>
 /// - [IUPAC Periodic Table of the Elements and Isotopes](https://iupac.org/what-we-do/periodic-table-of-elements/)
+/// - [Wikipedia: Periodic Table](https://en.wikipedia.org/wiki/Periodic_table)
 #[derive(Clone, Copy, Debug, Eq, Hash, Ord, PartialEq, PartialOrd)]
 #[non_exhaustive]
 pub enum Element {
