@@ -14,6 +14,8 @@ use crate::core::Element;
 /// let h1 = Zai::new(1, 1, 0);
 /// // From standard name
 /// let h1 = Zai::from_name("H1").unwrap();
+/// // From id
+/// let h1 = Zai::from_id(10010).unwrap();
 ///
 /// assert_eq!(h1.atomic_number(), 1);
 /// assert_eq!(h1.mass_number(), 1);
@@ -182,7 +184,7 @@ impl Zai {
     /// # Format
     ///
     /// ```text
-    /// ID = Z * 10000 + A * 10 + I
+    /// ID = Z × 10000 + A × 10 + I
     /// ```
     ///
     /// with:
@@ -210,7 +212,7 @@ impl Zai {
     /// assert_eq!(Zai::from_id(952420), Some(Zai::new(95, 242, 0)));
     /// // Am242m1 -> Z = 95, A = 242, I = 1
     /// assert_eq!(Zai::from_id(952421), Some(Zai::new(95, 242, 1)));
-    /// // Am242m1 -> Z = 95, A = 242, I = 2
+    /// // Am242m2 -> Z = 95, A = 242, I = 2
     /// assert_eq!(Zai::from_id(952422), Some(Zai::new(95, 242, 2)));
     /// ```
     pub fn from_id(id: u32) -> Option<Self> {
@@ -279,7 +281,7 @@ impl Zai {
     /// Nuclide ID is given by:
     ///
     /// ```text
-    /// ID = Z * 10000 + A * 10 + I
+    /// ID = Z × 10000 + A × 10 + I
     /// ```
     ///
     /// with:
