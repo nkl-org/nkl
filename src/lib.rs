@@ -5,3 +5,4 @@
 #![deny(missing_docs)]
 
 pub mod core;
+pub mod data;
