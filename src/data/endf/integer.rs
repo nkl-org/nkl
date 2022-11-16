@@ -39,6 +39,12 @@ use std::{error::Error, fmt::Display};
 /// - `integer` contains invalid sign/digit
 /// - `integer` is only partially parsable
 pub fn parse_endf_integer<I: AsRef<[u8]>>(integer: I) -> Result<i64, ParseEndfIntegerError> {
+    // The implmentation here is based on following objectives:
+    // - Support fortran E-less format
+    // - Support fortran blank interpretation mode
+    // - Do not incur UTF-8 validation => no conversion to string
+    // - Rely on limited integer numbers length in ENDF format (<= 11)
+    //   => prevent overflow
     let integer = integer.as_ref();
     // -> empty slice
     if integer.is_empty() {
