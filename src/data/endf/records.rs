@@ -3,7 +3,7 @@
 pub struct Cont(pub f64, pub f64, pub i64, pub i64, pub i64, pub i64);
 
 /// ENDF **INTG** record.
-#[derive(Clone, Debug, PartialEq)]
+#[derive(Clone, Debug, Eq, PartialEq)]
 pub struct Intg(pub i64, pub i64, pub Vec<i64>);
 
 /// ENDF **LIST** record.
@@ -44,5 +44,5 @@ pub struct Tab2(
 );
 
 /// ENDF **TEXT** record.
-#[derive(Clone, Debug, PartialEq)]
+#[derive(Clone, Debug, Eq, PartialEq)]
 pub struct Text(pub String);
