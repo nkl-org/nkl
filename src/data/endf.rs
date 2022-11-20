@@ -99,16 +99,14 @@ pub fn parse_float<R: AsRef<[u8]>>(record: R, column: usize) -> Result<f64, Endf
     }
 }
 
-type Record = (f64, f64, i64, i64, i64, i64, i32, u32, u32, Option<u32>);
-
-/// Parse ENDF record.
+/// Parse ENDF `CONT` record.
 ///
 /// # Format
 ///
 /// This function assume following format:
 ///
 /// ```text
-/// record = float[11] float[11] integer[11] integer[11] integer[11] integer[11] mat[4] mf[2] mt[3] ns[5]?
+/// record = float[11] float[11] integer[11] integer[11] integer[11] integer[11]
 /// ```
 ///
 /// Integers and floating point numbers format are described in relevant
@@ -123,26 +121,23 @@ type Record = (f64, f64, i64, i64, i64, i64, i32, u32, u32, Option<u32>);
 /// - invalid data of the record
 /// - parsing float from column 1 or 2 failed
 /// - parsing integer from column 3-6 failed
-/// - parsing MAT/MF/MT/NS control number failed
 ///
 /// # Examples
 ///
 /// ```
-/// use nkl::data::endf::parse_record;
-/// let record = " 1.23456789-1.23456789          1          2          3          412341212312345";
-/// let (c1, c2, l1, l2, n1, n2, mat, mf, mt, ns) = parse_record(record.as_bytes()).unwrap();
+/// use nkl::data::endf::parse_cont;
+/// use nkl::data::endf::Cont;
+///
+/// let record = b" 1.23456789-1.23456789          1          2          3          412341212312345";
+/// let Cont(c1, c2, l1, l2, n1, n2) = parse_cont(record).unwrap();
 /// assert_eq!(c1, 1.23456789);
 /// assert_eq!(c2, -1.23456789);
 /// assert_eq!(l1, 1);
 /// assert_eq!(l2, 2);
 /// assert_eq!(n1, 3);
 /// assert_eq!(n2, 4);
-/// assert_eq!(mat, 1234);
-/// assert_eq!(mf, 12);
-/// assert_eq!(mt, 123);
-/// assert_eq!(ns, Some(12345))
 /// ```
-pub fn parse_record<R: AsRef<[u8]>>(record: R) -> Result<Record, EndfError> {
+pub fn parse_cont<R: AsRef<[u8]>>(record: R) -> Result<Cont, EndfError> {
     let record = record.as_ref();
     let c1 = parse_float(record, 1)?;
     let c2 = parse_float(record, 2)?;
@@ -150,11 +145,44 @@ pub fn parse_record<R: AsRef<[u8]>>(record: R) -> Result<Record, EndfError> {
     let l2 = parse_integer(record, 4)?;
     let n1 = parse_integer(record, 5)?;
     let n2 = parse_integer(record, 6)?;
-    let mat = parse_material(record)?;
-    let mf = parse_file(record)?;
-    let mt = parse_section(record)?;
-    let ns = parse_sequence(record)?;
-    Ok((c1, c2, l1, l2, n1, n2, mat, mf, mt, ns))
+    Ok(Cont(c1, c2, l1, l2, n1, n2))
+}
+
+/// Parse ENDF `TEXT` record.
+///
+/// # Format
+///
+/// This function assume following format:
+///
+/// ```text
+/// record = string[66]
+/// ```
+///
+/// # Errors
+///
+/// [`EndfError`] is returned if:
+/// - invalid format of the record
+/// - invalid data of the record
+///
+/// # Examples
+///
+/// ```
+/// use nkl::data::endf::parse_text;
+/// use nkl::data::endf::Text;
+///
+/// let record = b"ABCDEFGHIJKLMNOPQRSTUVXYZ abcdefghijklmnopqrstuvxyz 0123456789    12341212312345";
+/// let Text(hl) = parse_text(record).unwrap();
+/// assert_eq!(hl, "ABCDEFGHIJKLMNOPQRSTUVXYZ abcdefghijklmnopqrstuvxyz 0123456789    ");
+/// ```
+pub fn parse_text<R: AsRef<[u8]>>(record: R) -> Result<Text, EndfError> {
+    let record = record.as_ref();
+    match record.get(0..66) {
+        Some(slice) => match String::from_utf8(slice.to_vec()) {
+            Ok(hl) => Ok(Text(hl)),
+            Err(_) => Err(EndfError::Data),
+        },
+        None => Err(EndfError::Format),
+    }
 }
 
 type ControlNumbers = (i32, u32, u32, Option<u32>);
@@ -379,17 +407,13 @@ mod tests {
     fn record() {
         let record =
             " 1.23456789-1.23456789          1          2          3          412341212312345";
-        let (c1, c2, l1, l2, n1, n2, mat, mf, mt, ns) = parse_record(record.as_bytes()).unwrap();
+        let Cont(c1, c2, l1, l2, n1, n2) = parse_cont(record.as_bytes()).unwrap();
         assert_eq!(c1, 1.23456789);
         assert_eq!(c2, -1.23456789);
         assert_eq!(l1, 1);
         assert_eq!(l2, 2);
         assert_eq!(n1, 3);
         assert_eq!(n2, 4);
-        assert_eq!(mat, 1234);
-        assert_eq!(mf, 12);
-        assert_eq!(mt, 123);
-        assert_eq!(ns, Some(12345))
     }
 
     #[test]
