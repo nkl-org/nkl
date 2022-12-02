@@ -72,7 +72,7 @@ pub fn parse_endf_float<F: AsRef<[u8]>>(float: F) -> Result<f64, ParseEndfFloatE
     // available in standard ENDF evaluations.
     // i.e: 1.2345+12 = 1.2345e+12
     //
-    // The implmentation here is based on following objectives:
+    // The implementation here is based on following objectives:
     // - Support fortran E-less format
     // - Support fortran blank interpretation mode
     // - Do not incur UTF-8 validation => no conversion to string
@@ -107,7 +107,7 @@ pub fn parse_endf_float<F: AsRef<[u8]>>(float: F) -> Result<f64, ParseEndfFloatE
     //   exactly as floats
     //      10^12 = 5^12 × 2^12
     //      5^12 < 2^53
-    // all ENDF float f = w × 10^q such that -22 <= q <= can be converted
+    // all ENDF float f = w × 10^q such that -22 <= q <= 22 can be converted
     // directly to binary floating point numbers.
     //
     // For small exponent (|q| <= 22) this implementation does the following:

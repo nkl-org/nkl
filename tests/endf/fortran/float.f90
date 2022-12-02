@@ -6,9 +6,6 @@ integer(kind = 4) :: i, stat
 real(dp) :: field
 character(len = 11), dimension(111) :: floats
 floats = [&
-!###############
-!###  Valid  ###
-!###############
 !Standard
 "        0.0",&
 "       +0.0",&

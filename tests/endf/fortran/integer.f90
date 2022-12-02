@@ -5,10 +5,6 @@ integer(kind = 4) :: i, stat
 integer(kind = 8) :: field
 character(len = 11), dimension(35) :: integers
 integers = [&
-!###############
-!###  Valid  ###
-!###############
-!
 !Standard
 "          0",&
 "         +0",&

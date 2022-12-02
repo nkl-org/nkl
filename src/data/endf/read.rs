@@ -117,6 +117,10 @@ impl<B: BufRead> EndfReader<B> {
     /// Errors if:
     /// - I/O error occurs
     /// - malformed/invalid data
+    ///
+    /// # Panics
+    ///
+    /// Panics if `ndigit` ∉ `[2, 6]`
     pub fn read_intg(&mut self, ndigit: usize) -> Result<Intg, EndfError> {
         assert!(ndigit >= 2);
         assert!(ndigit <= 6);
