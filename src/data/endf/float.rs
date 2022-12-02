@@ -28,7 +28,7 @@ const POW_10_TABLE: [f64; 23] = [
 ///
 /// # Examples
 ///
-/// ```rust
+/// ```
 /// use nkl::data::endf::parse_endf_float;
 /// let float = parse_endf_float("1.2345E+01").unwrap();
 /// assert!((float - 1.2345E+01).abs() < 1e-4);

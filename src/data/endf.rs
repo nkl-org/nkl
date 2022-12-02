@@ -33,7 +33,8 @@
 //!
 //! # References
 //!
-//! Trkov, A., Herman, M., & Brown, D. A. (2012). *ENDF-6 formats manual*. Brookhaven National Laboratory, 80.
+//! Trkov, A., Herman, M., & Brown, D. A. (2012). *ENDF-6 formats manual*.
+//! Brookhaven National Laboratory, 80.
 
 // Error
 mod error;
