@@ -1,7 +1,7 @@
 use std::error::Error;
 use std::io::Cursor;
 
-use nkl::data::ace::parse_table;
+use nkl::data::ace::parse_ace_table;
 
 const IZAW: [(u32, f64); 16] = [
     (1, 1.0),
@@ -33,7 +33,7 @@ const XSS: [f64; 4] = [1.0, 2.0, 3.0, 4.0];
 fn version1() -> Result<(), Box<dyn Error>> {
     let ace = include_bytes!("data/version1.ace");
     let cursor = Cursor::new(ace);
-    let table = parse_table(cursor)?;
+    let table = parse_ace_table(cursor)?;
     assert_eq!(table.id(), "12345.12c");
     assert_eq!(table.atomic_weight_ratio(), 123.1234567);
     assert_eq!(table.temperature(), 1.23456E-12);
@@ -48,7 +48,7 @@ fn version1() -> Result<(), Box<dyn Error>> {
 fn version2() -> Result<(), Box<dyn Error>> {
     let ace = include_bytes!("data/version2.ace");
     let cursor = Cursor::new(ace);
-    let table = parse_table(cursor)?;
+    let table = parse_ace_table(cursor)?;
     assert_eq!(table.id(), "1123123.123c");
     assert_eq!(table.atomic_weight_ratio(), 123.1234567);
     assert_eq!(table.temperature(), 1.23456E-12);
