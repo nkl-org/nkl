@@ -1,5 +1,36 @@
 //! Evaluated Nuclear Data File (ENDF) module.
 //!
+//! The `endf` module provides convenient structs/enums/functions/implementations
+//! for dealing with ASCII ENDF-6 formatted files.
+//!
+//! # Records
+//!
+//! All records available in ENDF-6 format are available:
+//! - [`Cont`]
+//! - [`Intg`]
+//! - [`List`]
+//! - [`Tab1`]
+//! - [`Tab2`]
+//! - [`Text`]
+//!
+//! # Parsing
+//!
+//! A *low level* API is available for parsing standard ENDF-6 format primitives:
+//! - [`parse_endf_integer`]
+//! - [`parse_endf_float`]
+//!
+//! A *mid level* API is available for standard partial record parsing:
+//! - [`parse_integer`]
+//! - [`parse_float`]
+//! - [`parse_cont`]
+//! - [`parse_text`]
+//! - [`parse_material`]
+//! - [`parse_file`]
+//! - [`parse_section`]
+//! - [`parse_sequence`]
+//!
+//! A *high level* API available through the [`EndfReader`] struct.
+//!
 //! # References
 //!
 //! Trkov, A., Herman, M., & Brown, D. A. (2012). *ENDF-6 formats manual*. Brookhaven National Laboratory, 80.
@@ -254,6 +285,7 @@ pub fn parse_material<R: AsRef<[u8]>>(record: R) -> Result<i32, EndfError> {
     let record = record.as_ref();
     match record.get(66..70) {
         Some(slice) => match parse_endf_integer(slice) {
+            // soundness: cast safe because slice is at most 4 digits
             Ok(integer) => Ok(integer as i32),
             Err(_) => Err(EndfError::Data),
         },
@@ -275,6 +307,7 @@ pub fn parse_material<R: AsRef<[u8]>>(record: R) -> Result<i32, EndfError> {
 /// [`EndfError`] is returned if:
 /// - invalid record format
 /// - parsing MF control number failed
+/// - negative file number
 ///
 /// # Examples
 ///
@@ -288,7 +321,7 @@ pub fn parse_file<R: AsRef<[u8]>>(record: R) -> Result<u32, EndfError> {
     let record = record.as_ref();
     match record.get(70..72) {
         Some(slice) => match parse_endf_integer(slice) {
-            Ok(integer) => Ok(integer as u32),
+            Ok(integer) => integer.try_into().map_err(|_| EndfError::Data),
             Err(_) => Err(EndfError::Data),
         },
         None => Err(EndfError::Format),
@@ -309,6 +342,7 @@ pub fn parse_file<R: AsRef<[u8]>>(record: R) -> Result<u32, EndfError> {
 /// [`EndfError`] is returned if:
 /// - invalid record format
 /// - parsing MT control number failed
+/// - negative section number
 ///
 /// # Examples
 ///
@@ -322,7 +356,7 @@ pub fn parse_section<R: AsRef<[u8]>>(record: R) -> Result<u32, EndfError> {
     let record = record.as_ref();
     match record.get(72..75) {
         Some(slice) => match parse_endf_integer(slice) {
-            Ok(integer) => Ok(integer as u32),
+            Ok(integer) => integer.try_into().map_err(|_| EndfError::Data),
             Err(_) => Err(EndfError::Data),
         },
         None => Err(EndfError::Format),
@@ -344,6 +378,7 @@ pub fn parse_section<R: AsRef<[u8]>>(record: R) -> Result<u32, EndfError> {
 /// [`EndfError`] is returned if:
 /// - invalid record format
 /// - parsing NS control number failed
+/// - negative sequence number
 ///
 /// # Examples
 ///
@@ -357,7 +392,10 @@ pub fn parse_sequence<R: AsRef<[u8]>>(record: R) -> Result<Option<u32>, EndfErro
     let record = record.as_ref();
     match record.get(75..80) {
         Some(slice) => match parse_endf_integer(slice) {
-            Ok(integer) => Ok(Some(integer as u32)),
+            Ok(integer) => match integer.try_into() {
+                Ok(integer) => Ok(Some(integer)),
+                Err(_) => Err(EndfError::Data),
+            },
             Err(_) => Err(EndfError::Data),
         },
         None => Ok(None),
