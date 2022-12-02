@@ -4,6 +4,22 @@ use std::str::Lines;
 use super::{AceError, Table};
 
 /// Parse ACE table.
+///
+/// # Examples
+///
+/// ```no_run
+/// use std::fs::File;
+/// use std::io::BufReader;
+/// use nkl::data::ace::parse_ace_table;
+///
+/// # fn main() -> Result<(), Box<dyn std::error::Error>> {
+/// let path = "path/to/file.ace";
+/// let file = File::open(path).expect("could not open ace file");
+/// let buf_reader = BufReader::new(file);
+/// let table = parse_ace_table(buf_reader)?;
+/// # Ok(())
+/// # }
+/// ```
 pub fn parse_ace_table<R: Read>(mut table: R) -> Result<Table, AceError> {
     let mut ace = String::new();
     table.read_to_string(&mut ace)?;

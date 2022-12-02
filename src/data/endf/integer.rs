@@ -16,7 +16,7 @@ use std::{error::Error, fmt::Display};
 ///
 /// # Examples
 ///
-/// ```rust
+/// ```
 /// use nkl::data::endf::parse_endf_integer;
 /// let integer = parse_endf_integer(" 1234567890").unwrap();
 /// assert_eq!(integer, 1234567890);
