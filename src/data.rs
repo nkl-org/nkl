@@ -2,3 +2,4 @@
 
 pub mod ace;
 pub mod endf;
+pub mod mass;
